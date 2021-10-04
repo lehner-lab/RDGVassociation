@@ -8,7 +8,7 @@ library(tidyverse)
 library(dplyr)
 
 
-###run code inside /002_association_testing_results/ folder
+###run code inside /003_association_testing_results/ folder
 
 ##directories
 input_file_direc='./input_files/'

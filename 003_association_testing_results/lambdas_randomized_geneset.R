@@ -9,7 +9,7 @@ library(dplyr)
 library(ggrastr)
 
 
-###run code inside /002_association_testing_results/ folder
+###run code inside /003_association_testing_results/ folder
 
 ##directories
 input_file='./input_files/Discovery_TCGA_SKATO_results_randomized_geneset.txt'
