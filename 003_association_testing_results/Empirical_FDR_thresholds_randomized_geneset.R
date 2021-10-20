@@ -8,11 +8,11 @@ library(tidyverse)
 library(dplyr)
 
 
-###run code inside /003_association_testing_results/ folder
-
 ##directories
-input_file_direc='./input_files/'
-output_file_direc='./results/'
+input_file_direc='./003_association_testing_results/input_files/'
+output_file_direc='./003_association_testing_results/results/'
+output_figure_direc='./003_association_testing_results/figures/'
+
 
 ##upload models to be discarded, extracted via lambdas.R script
 models_discard <- read.csv(file = paste(output_file_direc,'models_removed_based_on_lambda_randomized_geneset.txt',sep=''),head=TRUE,sep ='\t',stringsAsFactors=FALSE) 
