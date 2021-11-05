@@ -10,9 +10,9 @@ library(ggrastr)
 
 
 ##directories
-input_file='./003_association_testing_results/input_files/Discovery_TCGA_SKATO_results.txt'
-output_file_direc='./003_association_testing_results/results/'
-output_figure_direc='./003_association_testing_results/figures/'
+input_file='./input_files/Discovery_TCGA_SKATO_results.txt'
+output_file_direc='./results/'
+output_figure_direc='./figures/'
 
 table_name='SKAT_models'
 

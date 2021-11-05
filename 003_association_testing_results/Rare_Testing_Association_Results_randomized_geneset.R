@@ -11,9 +11,9 @@ library(reshape2)
 
 
 ##directories
-input_file_direc='./003_association_testing_results/input_files/'
-output_file_direc='./003_association_testing_results/results/'
-output_figure_direc='./003_association_testing_results/figures/'
+input_file_direc='./input_files/'
+output_file_direc='./results/'
+output_figure_direc='./figures/'
 
 
 ##discard models based on lambda

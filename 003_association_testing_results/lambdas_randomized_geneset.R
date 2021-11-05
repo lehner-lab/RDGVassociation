@@ -10,16 +10,16 @@ library(ggrastr)
 
 
 ##directories
-input_file_direc='./003_association_testing_results/input_files/Discovery_TCGA_SKATO_results_randomized_geneset.txt'
-output_file_direc='./003_association_testing_results/results/'
-output_figure_direc='./003_association_testing_results/figures/'
+input_file='./input_files/Discovery_TCGA_SKATO_results_randomized_geneset.txt'
+output_file_direc='./results/'
+output_figure_direc='./figures/'
 
 
 table_name='SKAT_models'
 
 
 ##upload SKAT-O results
-SKAT_res <- read.csv(file =input_file,head=TRUE,sep ='\t',stringsAsFactors=FALSE) 
+SKAT_res <- read.csv(file= input_file,head=TRUE,sep ='\t',stringsAsFactors=FALSE) 
 
 ##calculate lambdas
 lambdas_results <- c()
