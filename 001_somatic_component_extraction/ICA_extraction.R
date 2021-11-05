@@ -120,7 +120,7 @@ for(n_components in 2:component_max){
 
 
 ####matrix min_silh_cluster
-pdf(file=paste(output_figure_direc,"/fastICA",'_',input_name,'_',as.character(ICA_n),'nonresampled_replicates_min_silhouette_vs_k.pdf',sep=''),
+pdf(file=paste(output_figure_direc,"fastICA",'_',input_name,'_',as.character(ICA_n),'nonresampled_replicates_min_silhouette_vs_k.pdf',sep=''),
     width= 8,
     height = 7)    
 ggplot(ICA_silhouette_results, aes(component, k)) +
@@ -147,3 +147,34 @@ dev.off();
 write.table(ICA_silhouette_results,
             file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_ICA_run_silhouette_results.txt',sep=''),
             col.names = T, row.names = F, sep='\t', quote = F)
+
+
+##plot only the k=2*n_ICA
+sh_ICA_plot <- ICA_silhouette_results %>%
+  dplyr::filter(k == 2*component) %>% 
+  dplyr::select(-average_silh) %>%
+  melt(id.vars=c('k','component'))  %>%
+  mutate(variable= sub('min_silh_cluster','minimum\nsilh_cluster',variable))  %>%
+  mutate(variable= sub('second_low_silh_cluster','second minimum\nsilh_cluster',variable))  %>%
+  mutate(variable= sub('average_silh_cluster','average\nsilh_cluster',variable))  %>%
+  mutate(variable= factor(variable, levels =c('average\nsilh_cluster','minimum\nsilh_cluster','second minimum\nsilh_cluster')))
+
+
+pdf(file= paste(output_figure_direc,'fastICA_silhouette_average_k_2n','.pdf',sep=''),
+    width= 8,
+    height = 4)  
+ggplot(sh_ICA_plot, aes(component, value)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=10,  color='black'),
+        axis.text.y = element_text(size=10, color='black'),
+        axis.title = element_text(size=10, color='black'),
+        strip.text.x = element_text(size=10, color='black'),
+        strip.text.y = element_text(size=10, color='black'),
+        legend.title = element_blank(),
+        legend.position = 'none') +
+  xlab('independent component')  +
+  ylab('silhouette index')  +
+  facet_grid(variable ~ .)
+dev.off()
