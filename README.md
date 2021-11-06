@@ -14,7 +14,7 @@ Scripts to extract components (either via ICA or VAE).
 * Scripts to replicate manuscript figures (output files from somatic component extraction provided)
 
 ### 002_association_testing_results
-* All resuts from association study between rare damaging germline variants (RDGVs) and somatic components using SKAT-O provided
+* All resuts from association study between rare damaging germline variants (RDGVs) and somatic components using [SKAT-O](https://www.cell.com/ajhg/fulltext/S0002-9297(12)00316-3) provided
 * Scripts to replicate manuscript figures
 
 ### 003_network_analysis_results
