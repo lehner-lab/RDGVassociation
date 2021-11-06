@@ -20,3 +20,7 @@ Scripts to extract components (either via ICA or VAE).
 ### 003_network_analysis_results
 * Scripts to perform network analysis as described in manuscript
 * Scripts to replicate manuscript figures
+
+## Visualization of association results via Shiny APP
+https://mischanvp.shinyapps.io/rare_association_shiny/
+
