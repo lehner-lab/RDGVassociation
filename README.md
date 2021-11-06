@@ -14,13 +14,13 @@ Scripts to extract components (either via ICA or VAE).
 * Scripts to replicate manuscript figures (output files from somatic component extraction provided)
 
 ### 002_association_testing_results
-* All resuts from association study between rare damaging germline variants (RDGVs) and somatic components using [SKAT-O](https://www.cell.com/ajhg/fulltext/S0002-9297(12)00316-3) provided
+* All resuts from association study between rare damaging germline variants (RDGVs) and somatic components using [SKAT-O](https://www.cell.com/ajhg/fulltext/S0002-9297(12)00316-3) are provided
 * Scripts to replicate manuscript figures
 
 ### 003_network_analysis_results
 * Scripts to perform network analysis as described in manuscript
 * Scripts to replicate manuscript figures
 
-## Visualization of association results via Shiny APP
+## Interactive visualization of association results via Shiny app
 https://mischanvp.shinyapps.io/rare_association_shiny/
 
