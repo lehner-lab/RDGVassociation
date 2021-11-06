@@ -9,6 +9,8 @@ Scripts to extract components (either via ICA or VAE).
 * Required R packages: tidyverse, dplyr, reshape2, ggplot2, wesanderson, gplots, cluster, fastICA, corrpot, ggrepel
 
 ## Content
+* Description of the respective scripts can be found in each sub-directory
+
 ### 001_somatic_component_extraction
 * Scripts to extract somatic components via Independent Component Analysis (ICA) or Variational Autoencoder (VAE) neural network (input files provided)
 * Scripts to replicate manuscript figures (output files from somatic component extraction provided)
