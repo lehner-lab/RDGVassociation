@@ -10,8 +10,8 @@ Scripts to extract components (either via ICA or VAE).
 
 ## Content
 ### 001_somatic_component_extraction
-* Scripts to extract somatic components via Independent Component Analysis (ICA) or Variational Autoencoder (VAE) (input files provided)
-* Scripts to replicate manuscript figures
+* Scripts to extract somatic components via Independent Component Analysis (ICA) or Variational Autoencoder (VAE) neural network (input files provided)
+* Scripts to replicate manuscript figures (output files from somatic component extraction provided)
 
 ### 002_association_testing_results
 * All resuts from association study between rare damaging germline variants (RDGVs) and somatic components using SKAT-O provided
