@@ -9,24 +9,23 @@ library(dplyr)
 library(fastICA)
 library(cluster)
 library(ggplot2);
+library(wesanderson);
 
 ##directories
 input_file_direc='./input_files/'
 output_file_direc='./results/'
 output_figure_direc='./figures/'
 
-
-
 ####upload combined phenotypes output
 #sample x phenotype matrix
-# scaled, samples with many NAs removed, NAs with median replaced
+#scaled, samples with many NAs removed, NAs with median replaced
 
 Combined_phenotypes_cohorts <-  read.csv(file= paste(input_file_direc,"/TCGA_Hartwig_PCAWG_samples_vs_phenotypes_withSigs_least45of56_allforGWAS_14832samples_table.txt",sep=''),
                                          head=T,sep ="\t")
 input_name='TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples'
 
 
-################### perform fastICA on matrix ####################  #################### #################### #################### 
+################### perform fastICA on matrix ####################  
 #ICA changes with every run
 #run it n times
 #run it with different component extractions
@@ -178,3 +177,42 @@ ggplot(sh_ICA_plot, aes(component, value)) +
   ylab('silhouette index')  +
   facet_grid(variable ~ .)
 dev.off()
+
+##plot the correlation between the ICs with 15 component extractions and 30-medoid clustering 
+
+#upload the best run
+load(paste(input_file_direc,'/fastICA_TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples_15components_30kmedoid_clusters_200nonresampled_replicates.RData',sep=''))
+
+###taking clustered mediods
+ica_loadings_matrix <- t(clustering_output$medoids)
+
+###look at pearson between medoids to find mirrored ones
+ica_loadings_pearson <- ica_loadings_matrix %>%
+  cor(method = c("pearson"), use = "pairwise.complete.obs") #pairwise pearson wird berechnent, du kannst dir jeden command anscheun mit ?cor
+colnames(ica_loadings_pearson) <- paste('IC_medoid_',seq(1,length(colnames(ica_loadings_pearson))),sep='')
+rownames(ica_loadings_pearson) <- paste('IC_medoid_',seq(1,length(colnames(ica_loadings_pearson))),sep='')
+
+colors_plot <- wes_palette("Zissou1", 10, type = "continuous")
+res1 <- cor.mtest(ica_loadings_pearson, conf.level=.99) #significance test
+
+pdf(file= paste(output_figure_direc,'fastICA_pearsonComponents','.pdf',sep=''),
+    width= 9,
+    height = 5) 
+corrplot(ica_loadings_pearson,
+         is.corr=T,
+         tl.cex= .8,
+         tl.col = "black",
+         col=colors_plot,
+         title='',
+         #tl.pos = "lt",
+         mar=c(0,0,2,0), #margins fürs pdf plotten
+         method= "square",
+         type = "upper",
+         cl.cex = 1,
+         p.mat = res1$p, sig.level = 0.05, pch.cex = .3,
+         insig = "blank",
+         na.label = "o"
+)
+dev.off() 
+
+
