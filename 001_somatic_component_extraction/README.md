@@ -7,8 +7,14 @@
 * **ICA_overview.R:** Plotting correlations/contributions of input somatic features with ICs.
 
 ### Extractions of Variational Autoencoder derived Components
-* **VAE_tensorflow1.py:** Running Variational Autoencoder with dataset spit (90 % training and 10% test) to find optimal parameters. Recommended to be run in Singularity environment.
-* **VAE_tensorflow1_nosplit_alldata.py:** Running on complete dataset after finding optimal parameters. 
+* **VAE_tensorflow1.py:** Running Variational Autoencoder with dataset split (90 % training and 10% test) to find optimal parameters. Recommended to be run in Singularity environment. Example:
+```
+singularity exec tensorflow1.15.5_gpu_jupyter_moredependencies-v1.simg python VAE_tensorflow1.py --learning_rate 0.0005 --batch_size 200 --epochs 200 --num_components 14 --dataset_training 'TCGA_Hartwig_PCAWG_least45of56_14832samples_90split_balanced.txt' --dataset_test 'TCGA_Hartwig_PCAWG_least45of56_14832samples_10split_balanced.txt' --kappa 0.5 --depth 1
+```
+* **VAE_tensorflow1_nosplit_alldata.py:** Running on complete dataset after finding optimal parameters. Example:
+```
+singularity exec tensorflow1.15.5_gpu_jupyter_moredependencies-v1.simg python VAE_tensorflow1_nosplit_alldata.py --learning_rate 0.0005 --batch_size 200 --epochs 200 --num_components 14 --dataset_training 'TCGA_Hartwig_PCAWG_least45of56_14832samples_nosplit_balanced.txt' --kappa 0.5 --depth 1
+```
 * **VAE_overview.R:** Plotting results from VAE: parameter sweep, optimal parameters, overview of selected components, correlation with selected ICs.
 
 ### Final Set of Components
