@@ -3,7 +3,7 @@
 ## Description of Scripts
 
 ### Extraction of Independent Components
-* **ICA_extraction.R:** Extraction of Independent Components from 2 to 30. Runs over 24h and not recommended to be run locally. Final plots with ICA extraction using 15 components.
+* **ICA_extraction.R:** Extraction of Independent Components from 2 to 30. Runs over 24h and it is not recommended to be run locally. Final plots with ICA extraction using 15 components.
 * **ICA_overview.R:** Plotting correlations/contributions of input somatic features with ICs.
 
 ### Extractions of Variational Autoencoder derived Components
@@ -26,7 +26,7 @@ singularity exec tensorflow1.15.5_gpu_jupyter_moredependencies-v1.simg python VA
 ```
 singularity pull docker://mvpandapaw/tensorflow1.15.5_gpu_jupyter_moredependencies:v1
 ```
-* Underying Dockerfile can be found in the directory /Dockerfile/
+* Underlying Dockerfile can be found in the directory /Dockerfile/
 * Scripts can then be run as follows:
 ```
 singularity exec tensorflow1.15.5_gpu_jupyter_moredependencies-v1.simg python script.py
