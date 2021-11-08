@@ -1,4 +1,4 @@
-# Results of RDGV association Study
+# Results of RDGV Association Study
 
 ## Description of Scripts
 * **lambdas.R:** Estimation of inflation factors for all tests for selected gene set (enriched for DNA repair genes).
