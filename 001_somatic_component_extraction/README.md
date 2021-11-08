@@ -3,10 +3,13 @@
 ## Description of Scripts
 
 ### Extraction of Independent Components
-* **ICA_extraction:** Extraction of Independent Components. Runs over 24h and not recommended to be run locally.
+* **ICA_extraction.R:** Extraction of Independent Components from 2 to 30. Runs over 24h and not recommended to be run locally. Final plots with ICA extraction using 15 components.
+* **ICA_overview.R:** Plotting correlations/contributions of input somatic features with ICs.
 
 
 ### Extractions of Variational Autoencoder derived Components
+* **VAE_tensorflow1.py:** Running Variational Autoencoder with dataset spit (90 % training and 10% test) to find optimal parameters. Recommended to be run in Singularity environment.
+* **VAE_tensorflow1_nosplit_alldata.py:** 
 
 
 ## Running Variational Autoencoder Neural Network in Singularity Environment
