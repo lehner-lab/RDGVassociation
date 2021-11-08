@@ -1,4 +1,4 @@
-# RDGVassociation
+# Association of Rare Damaging Germline Variants (RDGVs) with Somatic Mutational Components 
 Scripts and data to replicate manuscript figures.
 Scripts to extract components (either via ICA or VAE).
 
