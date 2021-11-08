@@ -8,3 +8,7 @@
 singularity pull docker://mvpandapaw/tensorflow1.15.5_gpu_jupyter_moredependencies
 ```
 * Underying Dockerfile can be found in the directory /Dockerfile/
+* Scripts can then be run as follows:
+```
+singularity exec tensorflow1.15.5_gpu_jupyter_moredependencies-v1.simg python script.py
+```
