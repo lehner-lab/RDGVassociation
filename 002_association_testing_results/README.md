@@ -4,7 +4,7 @@
 * **lambdas.R:** Estimation of inflation factors for all tests for the selected gene set (enriched for DNA repair genes).
 * **lambdas_randomized_geneset.R:** Estimation of inflation factors for all tests for the randomized gene set.
 * **Empirical_FDR_thresholds.R:** Estimation of False Discovery Rates across cancer_types and pan-cancer for selected gene set.
-* **Empirical_FDR_thresholds_randomized_geneset.R:** Estimation of False Discovery Rates across cancer_types and pan-can for the randomized gene set.
+* **Empirical_FDR_thresholds_randomized_geneset.R:** Estimation of False Discovery Rates across cancer_types and pan-cancer for the randomized gene set.
 * **Rare_Testing_Association_Results_1percent_FDR.R:** Main results and stats at a FDR of 1%.
 * **Rare_Testing_Association_Results_2percent_FDR.R:** Main results and stats at a FDR of 2%.
 * **Rare_Testing_Association_Results_distribution_hits.R:** Overview of distribution of hits across components, RDGV sets, models of inheritance, and cancer types.
