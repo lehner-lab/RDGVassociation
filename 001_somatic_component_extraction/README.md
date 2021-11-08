@@ -3,6 +3,9 @@
 ## Description of Scripts
 
 ### Extraction of Independent Components
+* ICA_extraction: Extraction of Independent Components. Runs over 24h and not recommended to be run locally.
+
+
 ### Extractions of Variational Autoencoder derived Components
 
 
