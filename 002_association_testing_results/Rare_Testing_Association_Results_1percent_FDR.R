@@ -8,6 +8,9 @@ library(tidyverse)
 library(dplyr)
 library(wesanderson)
 library(reshape2)
+library(RColorBrewer)
+library(ggrastr)
+library(ggpubr)
 
 
 ##directories

@@ -9,7 +9,9 @@ library(dplyr)
 library(ggplot2);
 library(wesanderson);
 library(corrplot)
-
+library(RColorBrewer)
+library(ggrastr)
+library(ggpubr)
 
 ##directories
 input_file_direc='./input_files/'
@@ -225,23 +227,20 @@ cor <-
 
 plotOut <- NULL
 n=1
-for(PC in c('VAE_1','VAE_2','VAE_3','VAE_4',
+for(VAE in c('VAE_1','VAE_2','VAE_3','VAE_4',
             'VAE_5','VAE_6','VAE_7','VAE_8',
             'VAE_9','VAE_10','VAE_11','VAE_12',
-            'VAE_13','VAE_14',
-            'VAE_depth2_1','VAE_depth2_2','VAE_depth2_3','VAE_depth2_4',
-            'VAE_depth2_5','VAE_depth2_6','VAE_depth2_7','VAE_depth2_8',
-            'VAE_depth2_9','VAE_depth2_10','VAE_depth2_11','VAE_depth2_12',
-            'VAE_depth2_13','VAE_depth2_14')){
-  print(PC)
+            'VAE_13','VAE_14')){
+  
+  print(VAE)
   
   rm(contri_cor_selected_order)
   contri_cor_selected_order <-
     cor %>%
-    dplyr::filter(variable == PC) %>%
+    dplyr::filter(variable == VAE) %>%
     #dplyr::filter(info == 'correlation') %>%
-    mutate(pheno=factor(pheno,ordered = F,levels = cor$pheno[order(abs(cor$value[cor$variable==PC & cor$info== 'correlation']), decreasing = T)])) %>%
-    dplyr::filter(pheno %in% cor$pheno[order(abs(cor$value[cor$variable==PC & cor$info== 'correlation']), decreasing = T)][1:10]) #only the 20 with the highest rankings
+    mutate(pheno=factor(pheno,ordered = F,levels = cor$pheno[order(abs(cor$value[cor$variable==VAE & cor$info== 'correlation']), decreasing = T)])) %>%
+    dplyr::filter(pheno %in% cor$pheno[order(abs(cor$value[cor$variable==VAE & cor$info== 'correlation']), decreasing = T)][1:10]) #only the 20 with the highest rankings
   
   bla <-
     ggplot(contri_cor_selected_order,

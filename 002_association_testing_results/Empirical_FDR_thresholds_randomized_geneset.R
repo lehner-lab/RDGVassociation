@@ -6,6 +6,9 @@
 
 library(tidyverse)
 library(dplyr)
+library(RColorBrewer)
+library(ggrastr)
+library(ggpubr)
 
 
 ##directories

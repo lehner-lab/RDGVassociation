@@ -10,6 +10,9 @@ library(fastICA)
 library(cluster)
 library(ggplot2);
 library(wesanderson);
+library(RColorBrewer)
+library(ggrastr)
+library(ggpubr)
 
 ##directories
 input_file_direc='./input_files/'

@@ -9,6 +9,9 @@ library(dplyr)
 library(ggplot2);
 library(wesanderson);
 library(corrplot)
+library(RColorBrewer)
+library(ggrastr)
+library(ggpubr)
 
 
 ##directories
