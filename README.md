@@ -1,6 +1,6 @@
 # Association of Rare Damaging Germline Variants (RDGVs) with Somatic Mutational Components 
-Scripts and data to replicate manuscript figures.
-Scripts to extract components (either via ICA or VAE). Pre-print on bioRxiv https://www.biorxiv.org/content/10.1101/2021.11.14.468508v1.
+Scripts and data to replicate manuscript figures: [The impact of rare germline variants on human somatic mutation processes](https://www.biorxiv.org/content/10.1101/2021.11.14.468508v1).
+Scripts to extract components (either via ICA or VAE).
 
 ## Getting Started
 * Run all scripts in their respective directories (otherwise need to change directories in scripts)
