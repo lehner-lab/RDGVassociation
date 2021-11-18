@@ -20,11 +20,11 @@ output_figure_direc='./figures/'
 
 
 ##upload the validated genes
-validated_genes <- read.csv(file = '../003_association_testing_results/results/validated_genes.txt',head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
+validated_genes <- read.csv(file = '../002_association_testing_results/results/validated_genes.txt',head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
   dplyr::select(gene,pheno,cancer_type,model,snps) 
 length(unique(validated_genes$gene))
 
-validated_genes_FDR2 <- read.csv(file = '../003_association_testing_results/results/validated_genes_FDR2.txt', head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
+validated_genes_FDR2 <- read.csv(file = '../002_association_testing_results/results/validated_genes_FDR2.txt', head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
   dplyr::select(gene,pheno,cancer_type,model,snps)  
 length(unique(validated_genes_FDR2$gene))
 
