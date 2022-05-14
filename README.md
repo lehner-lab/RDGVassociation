@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/413348149.svg)](https://zenodo.org/badge/latestdoi/413348149)
+
 # Association of Rare Damaging Germline Variants with Somatic Mutational Components 
 Scripts to extract components via ICA & VAE, to perform network analysis and to replicate manuscript figures: [The impact of rare germline variants on human somatic mutation processes](https://www.biorxiv.org/content/10.1101/2021.11.14.468508v1).
 
