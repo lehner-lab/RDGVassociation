@@ -16,6 +16,11 @@ library(ggpubr)
 input_file_direc='./input_files/'
 output_file_direc='./results/'
 
+##inputs
+validated_genes_input=''
+validated_genes_FDR2_input=''
+
+
 ##mapping features
 mapping_features <- data.frame(pheno=c(paste('IC',seq(1,15,1),sep=''),paste('VAE_',seq(1,14,1),sep='')),
                                pheno_name=c('Sig.17',
@@ -52,13 +57,13 @@ mapping_features <- data.frame(pheno=c(paste('IC',seq(1,15,1),sep=''),paste('VAE
 
 ####cytoscape input nodes
 ##upload validated genes FDR1
-validated_genes_FDR1 <-  read.csv(file = '../002_association_testing_results/results/validated_genes.txt',head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
+validated_genes_FDR1 <-  read.csv(file = validated_genes_input,head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
   dplyr::select(gene,pheno) %>%
   distinct() %>%
   mutate(gene_pheno= paste(gene,pheno,sep='_')) 
 
 ##upload validated genes FDR2
-validated_genes_FDR2 <- read.csv(file = '../002_association_testing_results/results/validated_genes_FDR2.txt',head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
+validated_genes_FDR2 <- read.csv(file = validated_genes_FDR2_input,head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
   dplyr::select(gene,pheno) %>%
   distinct() %>%
   mutate(gene_pheno= paste(gene,pheno,sep='_')) %>%
@@ -74,11 +79,6 @@ validated_genes_plot_FDR1 <- validated_genes_FDR1 %>%
   spread(pheno_name,fraction,is.na(0)) %>%
   mutate(validation=if_else(gene %in% validated_genes_FDR1$gene, 'FDR1','FDR2'))
 
-#write output
-write.table(validated_genes_plot_FDR1,
-            file= paste(output_file_direc,'network_validated_hits_FDR1.txt',sep=''),
-            quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
-
 
 ##combine hits from FDR1 and FDR2
 validated_genes_plot_FDR1_FDR2 <- validated_genes_FDR1 %>%
@@ -90,11 +90,6 @@ validated_genes_plot_FDR1_FDR2 <- validated_genes_FDR1 %>%
   dplyr::select(gene,pheno_name,fraction) %>%
   spread(pheno_name,fraction,is.na(0)) %>%
   mutate(validation=if_else(gene %in% validated_genes_FDR1$gene, 'FDR1','FDR2'))
-
-#write output
-write.table(validated_genes_plot_FDR1_FDR2,
-            file= paste(output_file_direc,'network_validated_hits_FDR1_FDR2.txt',sep=''),
-            quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
 
 
 ####cytoscape input network
@@ -111,12 +106,6 @@ gene_interactions_FDR1 <- read.csv(file= paste(input_file_direc,i,sep=''), head=
   dplyr::filter(symbol1 %in% validated_genes_FDR1$gene & symbol2 %in% validated_genes_FDR1$gene) %>% #only interactions from the validated geneset
   mutate(pp='pp')
 
-#write output
-write.table(gene_interactions_FDR1,
-            file= paste(output_file_direc,network_name,'_network_validated_hits_FDR1.txt',sep=''),
-            quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
-
-
 #interactions file FDR2 and FDR1
 gene_interactions_FDR2 <-  read.csv(file= paste(input_file_direc,i,sep=''), head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
   group_by(ID = paste0(pmax(symbol1, symbol2), pmin(symbol1, symbol2))) %>%
@@ -126,10 +115,5 @@ gene_interactions_FDR2 <-  read.csv(file= paste(input_file_direc,i,sep=''), head
   dplyr::filter(symbol1 %in% validated_genes_plot_FDR1_FDR2$gene & symbol2 %in% validated_genes_plot_FDR1_FDR2$gene) %>% #only interactions from the validated geneset
   mutate(pp='pp')
 
-#write output
-write.table(gene_interactions_FDR2,
-            file= paste(output_file_direc,network_name,'_network_validated_hits_FDR1_FDR2.txt',sep=''),
-            quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
-  
 
   

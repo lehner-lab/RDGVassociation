@@ -22,8 +22,6 @@ output_figure_direc='./figures/'
 ##discard models based on lambda
 models_discard <- read.csv(file = paste(output_file_direc,'models_removed_based_on_lambda_randomized_geneset.txt',sep=''),head=TRUE,sep ='\t',stringsAsFactors=FALSE) 
 
-
-
 ##upload results from burden
 TCGA_burden_results <- read.csv(file = paste(input_file_direc,'Discovery_TCGA_burden_results_randomized_geneset.txt',sep=''),head=TRUE,sep ='\t',stringsAsFactors=FALSE)  
 colnames(TCGA_burden_results)[2] <- 'burden_test_pValue'

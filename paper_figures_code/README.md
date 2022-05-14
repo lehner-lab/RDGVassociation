@@ -1,4 +1,4 @@
-# Results of RDGV Association Study
+# Code for main manuscript figures
 
 ## Description of Scripts
 * **lambdas.R:** Estimation of inflation factors for all tests for the selected gene set (enriched for DNA repair genes).
@@ -11,4 +11,4 @@
 * **Rare_Testing_Association_Results_randomized_geneset.R:** Number of replicated hits when using the randomized set of genes. 2nd approach of calculating an upper limit of the False Discovery Rate.
 * **Distribution_hits_sample_size.R:** Plotting the number of replicated hits across cancer types vs. sample size.
 * **venn_overlap_hits.R:**  Plotting Venn diagrams to visualize the number of hits in different groups. 
-* **Prevalence_count.R:**  Counting number of RDGVs across the different set of genes and RDGV sets.
+* **Counted_variants_gnomAD.R:**  Calculating frequencies of RDGVs across different set of genes and variants sets within the cancer cohort and gnomAD.

@@ -19,7 +19,6 @@ output_figure_direc='./figures/'
 
 table_name='SKAT_models'
 
-
 ##upload SKAT-O results
 SKAT_res <- read.csv(file =input_file,head=TRUE,sep ='\t',stringsAsFactors=FALSE) 
 

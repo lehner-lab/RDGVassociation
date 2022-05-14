@@ -23,9 +23,12 @@ output_figure_direc='./figures/'
 #sample x phenotype matrix
 #scaled, samples with many NAs removed, NAs with median replaced
 
-Combined_phenotypes_cohorts <-  read.csv(file= paste(input_file_direc,"/TCGA_Hartwig_PCAWG_samples_vs_phenotypes_withSigs_least45of56_allforGWAS_14832samples_table.txt",sep=''),
+##input
+input_matrix=''
+
+Combined_phenotypes_cohorts <-  read.csv(file= input_matrix,
                                          head=T,sep ="\t")
-input_name='TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples'
+input_name=''
 
 
 ################### perform fastICA on matrix ####################  
@@ -80,9 +83,9 @@ for(n_components in 2:component_max){
     
   }#finished running all randomizations for one component extraction
   
-  write.table(ica_score_results,
-              file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_','score_matrix_',as.character(ICA_n),'nonresampled_replicates.txt',sep=''),
-              col.names = T, row.names = F, sep='\t', quote = F);
+  #write.table(ica_score_results,
+   #           file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_','score_matrix_',as.character(ICA_n),'nonresampled_replicates.txt',sep=''),
+    #          col.names = T, row.names = F, sep='\t', quote = F);
   
   ###do the k-means clustering based on medoids with pam, k as number of components
   for(i_k in 2:clustering_max){
@@ -100,9 +103,9 @@ for(n_components in 2:component_max){
     
     
     ###saving the output
-    save(clustering_output, 
-         file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_',as.character(i_k),'kmedoid_clusters_',as.character(ICA_n),'nonresampled_replicates.RData',sep='')
-    )
+    #save(clustering_output, 
+     #    file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_',as.character(i_k),'kmedoid_clusters_',as.character(ICA_n),'nonresampled_replicates.RData',sep='')
+    #)
     
     ###saving silhouette coefficients output
     cluster_medoid_numbers <- data.frame(cluster_medoid=row.names(clustering_output$medoids),stringsAsFactors = F) %>%
@@ -112,9 +115,9 @@ for(n_components in 2:component_max){
       mutate(cluster=as.character(cluster)) %>%
       left_join(cluster_medoid_numbers,by=c('cluster'))
 
-    write.table(sh_cluster,
-                file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_',as.character(i_k),'kmedoid_clusters_',as.character(ICA_n),'nonresampled_replicates_silhouette.txt',sep=''),
-                col.names = T, row.names = F, sep='\t', quote = F);
+    #write.table(sh_cluster,
+     #           file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_',as.character(n_components),'components_',as.character(i_k),'kmedoid_clusters_',as.character(ICA_n),'nonresampled_replicates_silhouette.txt',sep=''),
+      #          col.names = T, row.names = F, sep='\t', quote = F);
     
     n= n+1
   } #finish run for each clustering
@@ -122,9 +125,6 @@ for(n_components in 2:component_max){
 
 
 ####matrix min_silh_cluster
-pdf(file=paste(output_figure_direc,"fastICA",'_',input_name,'_',as.character(ICA_n),'nonresampled_replicates_min_silhouette_vs_k.pdf',sep=''),
-    width= 8,
-    height = 7)    
 ggplot(ICA_silhouette_results, aes(component, k)) +
   geom_tile(aes(fill = min_silh_cluster)) +
   geom_text(aes(label=round(min_silh_cluster,2)),
@@ -144,11 +144,6 @@ ggplot(ICA_silhouette_results, aes(component, k)) +
   xlab('independent component') +
   ylab('extracted number of clusters') +
   labs(fill='minimum silhouette index cluster')
-dev.off();
-
-write.table(ICA_silhouette_results,
-            file=paste(output_file_direc,"output_ICA/fastICA",'_',input_name,'_ICA_run_silhouette_results.txt',sep=''),
-            col.names = T, row.names = F, sep='\t', quote = F)
 
 
 ##plot only the k=2*n_ICA
@@ -161,10 +156,6 @@ sh_ICA_plot <- ICA_silhouette_results %>%
   mutate(variable= sub('average_silh_cluster','average\nsilh_cluster',variable))  %>%
   mutate(variable= factor(variable, levels =c('average\nsilh_cluster','minimum\nsilh_cluster','second minimum\nsilh_cluster')))
 
-
-pdf(file= paste(output_figure_direc,'fastICA_silhouette_average_k_2n','.pdf',sep=''),
-    width= 8,
-    height = 4)  
 ggplot(sh_ICA_plot, aes(component, value)) +
   geom_point() +
   geom_line() +
@@ -179,12 +170,12 @@ ggplot(sh_ICA_plot, aes(component, value)) +
   xlab('independent component')  +
   ylab('silhouette index')  +
   facet_grid(variable ~ .)
-dev.off()
+
+
 
 ##plot the correlation between the ICs with 15 component extractions and 30-medoid clustering 
-
 #upload the best run
-load(paste(input_file_direc,'/fastICA_TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples_15components_30kmedoid_clusters_200nonresampled_replicates.RData',sep=''))
+#load(paste(input_file_direc,'/fastICA_TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples_15components_30kmedoid_clusters_200nonresampled_replicates.RData',sep=''))
 
 ###taking clustered mediods
 ica_loadings_matrix <- t(clustering_output$medoids)

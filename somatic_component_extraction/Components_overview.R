@@ -18,16 +18,16 @@ input_file_direc='./input_files/'
 output_file_direc='./results/'
 output_figure_direc='./figures/'
 
+###inputs
+IC_features_input=''
+VAE_features_input=''
 
 ##upload the IC features
-IC_features <-  read.csv(file= paste(input_file_direc,'TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples_ICs_ContrCorr.txt',sep=''),
-                         head=T,sep ="\t", stringsAsFactors = F) %>%
+IC_features <-  read.csv(file= IC_features_input, head=T,sep ="\t", stringsAsFactors = F) %>%
   dplyr::filter(info=='correlation')
 
 ##upload the VAE features
-VAE_features <-  read.csv(file= paste(input_file_direc,'TCGA_Hartwig_PCAWG_least45of56_allforGWAS_14832samples_VAEs_ContrCorr.txt',sep=''),
-                         head=T,sep ="\t", stringsAsFactors = F) 
-
+VAE_features <-  read.csv(file= VAE_features_input,head=T,sep ="\t", stringsAsFactors = F) 
 
 ##combine VAE+IC stuff
 IC_VAE_features <- IC_features %>%
@@ -55,9 +55,6 @@ IC_VAE_features <- IC_features %>%
                                         'H3K36me3','Expression','RT','ID8','DBS1','Ref.Sig.7'))) 
 
 
-pdf(file= paste(output_figure_direc,'ICA_VAE_component_correlation_input_features','.pdf',sep=''),
-    width= 5.5,
-    height = 7)  
 ggplot(IC_VAE_features,
        aes(x=variable,y=pheno)) +
   geom_tile(aes(fill=value)) +
@@ -72,7 +69,6 @@ ggplot(IC_VAE_features,
   xlab('') +
   ylab('') +
   labs(fill='pearson correlation')
-dev.off()
 
 
 ##heatmap in order to order accordingly
@@ -83,15 +79,11 @@ IC_VAE_features_heatmap <- IC_VAE_features %>%
 IC_VAE_features_heatmap_matrix <- as.matrix(IC_VAE_features_heatmap[,2:ncol(IC_VAE_features_heatmap)])
 row.names(IC_VAE_features_heatmap_matrix) <- IC_VAE_features_heatmap$pheno
 
-pdf(file= paste(output_figure_direc,'ICA_VAE_component_correlation_input_features_heatmap','.pdf',sep=''),
-    width= 6,
-    height =8)  
 heatmap.2(IC_VAE_features_heatmap_matrix,
           trace='none',
           mar=c(11,5),
           col = wes_palette("Zissou1", 10, type = "continuous"),
           cexRow = 0.5)
-dev.off()
 
 
 

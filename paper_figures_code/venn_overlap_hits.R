@@ -18,9 +18,11 @@ input_file_direc='./input_files/'
 output_file_direc='./results/'
 output_figure_direc='./figures/'
 
+##inputs
+validated_genes_input=''
 
 ##upload replicated hits at an empirical FDR of 1%
-validated_genes <- read.csv(file = paste(output_file_direc,'validated_genes.txt',sep=''),head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
+validated_genes <- read.csv(file = validated_genes_input,head=TRUE,sep ='\t',stringsAsFactors=FALSE)  %>%
   dplyr::select(gene,pheno,cancer_type,model,snps)
 
 # Helper function to display Venn diagram

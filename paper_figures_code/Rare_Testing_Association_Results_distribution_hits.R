@@ -75,29 +75,6 @@ hits_cancer_type <- TCGA_hits_cancer_type %>%
   spread(cohort,n,is.na(0)) %>%
   melt(id.vars=c('cancer_type'))
 
-hits_cancer_type_ordered <- hits_cancer_type %>%
-  mutate(cancer_type=factor(cancer_type,ordered = F,levels = hits_cancer_type$cancer_type[order(hits_cancer_type$value[hits_cancer_type$variable=='Discovered hits'], decreasing = T)])) 
-
-##plots number of validated hits vs discovered hits
-pdf(file= paste(output_figure_direc,'distribution_hits_cancer_type','.pdf',sep=''),
-    width= 2,
-    height = 2)  
-ggplot(hits_cancer_type_ordered,
-       aes(x=cancer_type,y=log2(value),fill=variable)) +
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() +
-  theme(plot.subtitle = element_text(hjust = 0.5,size=8,color='black'),
-        axis.text.x = element_text(size=8,color='black',angle=70,hjust=1),
-        axis.text.y = element_text(size=8,color='black'),
-        axis.title = element_text(size=8,color='black'),
-        legend.position = "none") + 
-  scale_fill_manual(values=c("Discovered hits" = "#F21A00","Validated 1% FDR"="#3B9AB2","Validated 2% FDR"="#71B3C2")) +
-  labs(fill='') +
-  ylab('log2(Count)') +
-  xlab('Cancer type') +
-  scale_y_continuous(expand = c(0, 0))
-dev.off()
-
 
 ##plots number of validated hits only
 hits_cancer_type_validated <- hits_cancer_type %>%
@@ -144,30 +121,6 @@ hits_pheno <- TCGA_hits_pheno %>%
   rbind(Validated_hits_pheno_type_2FDR) %>%
   spread(cohort,n,is.na(0)) %>%
   melt(id.vars=c('pheno_name'))
-
-hits_pheno_ordered <- hits_pheno %>%
-  mutate(pheno_name=factor(pheno_name,ordered = F,levels = hits_pheno$pheno_name[order(hits_pheno$value[hits_pheno$variable=='Discovered hits'], decreasing = T)])) 
-
-##plots number of validated hits vs discovered hits
-pdf(file= paste(output_figure_direc,'distribution_hits_pheno','.pdf',sep=''),
-    width= 5.5,
-    height = 2)  
-ggplot(hits_pheno_ordered,
-       aes(x=pheno_name,y=log2(value),fill=variable)) +
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() +
-  theme(plot.subtitle = element_text(hjust = 0.5,size=8,color='black'),
-        axis.text.x = element_text(size=8,color='black',angle=70,hjust=1),
-        axis.text.y = element_text(size=8,color='black'),
-        axis.title = element_text(size=8,color='black'),
-        legend.position = "right") + 
-  scale_fill_manual(values=c("Discovered hits" = "#F21A00","Validated 1% FDR"="#3B9AB2","Validated 2% FDR"="#71B3C2")) +
-  labs(fill='')  +
-  ylab('log2(Count)') +
-  xlab('Somatic Mutation Components') +
-  scale_y_continuous(expand = c(0, 0))
-dev.off()
-
 
 ##plots number of validated hits only
 hits_pheno_validated <- hits_pheno %>%
@@ -218,29 +171,6 @@ hits_snps <- TCGA_hits_snps %>%
   mutate(snps=sub('MTR_25thCentile','Misssense_MTR',snps)) %>%
   mutate(snps=sub('CCR_90orhigher','Misssense_CCR',snps)) 
 
-hits_snps_ordered <- hits_snps %>%
-  mutate(snps=factor(snps,ordered = F,levels = hits_snps$snps[order(hits_snps$value[hits_snps$variable=='Discovered hits'], decreasing = T)])) 
-
-##plots number of validated hits vs discovered hits
-pdf(file= paste(output_figure_direc,'distribution_hits_snps','.pdf',sep=''),
-    width= 1.5,
-    height = 2)  
-ggplot(hits_snps_ordered,
-       aes(x=snps,y=log2(value),fill=variable)) +
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() +
-  theme(plot.subtitle = element_text(hjust = 0.5,size=8,color='black'),
-        axis.text.x = element_text(size=8,color='black',angle=70,hjust=1),
-        axis.text.y = element_text(size=8,color='black'),
-        axis.title = element_text(size=8,color='black'),
-        legend.position = "none") + 
-  scale_fill_manual(values=c("Discovered hits" = "#F21A00","Validated 1% FDR"="#3B9AB2","Validated 2% FDR"="#71B3C2")) +
-  labs(fill='')  +
-  ylab('log2(Count)')  +
-  xlab('RDGV SNP set') +
-  scale_y_continuous(expand = c(0, 0))
-dev.off()
-
 
 ##plots number of validated hits only
 hits_snps_validated <- hits_snps %>%
@@ -287,31 +217,6 @@ hits_model <- TCGA_hits_model %>%
   rbind(Validated_hits_model_2FDR) %>%
   spread(cohort,n,is.na(0)) %>%
   melt(id.vars=c('model'))
-
-
-hits_model_ordered <- hits_model %>%
-  mutate(model=factor(model,ordered = F,levels = hits_model$model[order(hits_model$value[hits_model$variable=='Discovered hits'], decreasing = T)])) 
-
-##plots number of validated hits vs discovered hits
-pdf(file= paste(output_figure_direc,'distribution_hits_model','.pdf',sep=''),
-    width= 1.5,
-    height = 2)  
-ggplot(hits_model,
-       aes(x=model,y=log2(value),fill=variable)) +
-  geom_bar(position="dodge", stat="identity") +
-  theme_bw() +
-  theme(plot.subtitle = element_text(hjust = 0.5,size=8,color='black'),
-        axis.text.x = element_text(size=8,color='black',angle=70,hjust=1),
-        axis.text.y = element_text(size=8,color='black'),
-        axis.title = element_text(size=8,color='black'),
-        legend.position = "none") + 
-  scale_fill_manual(values=c("Discovered hits" = "#F21A00","Validated 1% FDR"="#3B9AB2","Validated 2% FDR"="#71B3C2")) +
-  labs(fill='')  +
-  ylab('log2(Count)') +
-  xlab('Model of inheritance') +
-  scale_y_continuous(expand = c(0, 0))
-dev.off()
-
 
 ##plots number of validated hits only
 hits_model_validated <- hits_model %>%

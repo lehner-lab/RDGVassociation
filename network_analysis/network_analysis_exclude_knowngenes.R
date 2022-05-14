@@ -18,14 +18,17 @@ input_file_direc='./input_files/'
 output_file_direc='./results/'
 output_figure_direc='./figures/'
 
+##inputs
+validated_genes_input=''
+validated_genes_FDR2_input=''
 
 ##upload the validated genes
-validated_genes <- read.csv(file = '../002_association_testing_results/results/validated_genes.txt',head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
+validated_genes <- read.csv(file = validated_genes_input,head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
   dplyr::select(gene,pheno,cancer_type,model,snps) %>%
    dplyr::filter(!gene %in% c('MSH2','MLH1','BRCA2','BRCA1','PALB2'))
 length(unique(validated_genes$gene))
 
-validated_genes_FDR2 <- read.csv(file = '../002_association_testing_results/results/validated_genes_FDR2.txt', head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
+validated_genes_FDR2 <- read.csv(file = validated_genes_FDR2_input, head=TRUE,sep ='\t',stringsAsFactors=FALSE) %>%
   dplyr::select(gene,pheno,cancer_type,model,snps)  %>%
    dplyr::filter(!gene %in% c('MSH2','MLH1','BRCA2','BRCA1','PALB2'))
 length(unique(validated_genes_FDR2$gene))
@@ -66,9 +69,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
   
   
   ##histogram of number of gene interactions per gene - all
-  pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes','.pdf',sep=''),
-      width=3,
-      height = 1.5)  
   print(ggplot(total_interactions,
          aes(x=total_n_interactions)) +
     geom_histogram(fill='#3B9AB2',alpha=1,binwidth = 1) +
@@ -79,12 +79,8 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
           legend.position = 'none') +
     xlab('Numer of interactions per gene in geneset') +
     ylab('Count'))
-  dev.off()
-  
+
   ##histogram of number of gene interactions per gene - validated genes
-  pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes_validated','.pdf',sep=''),
-      width=3,
-      height = 1.5)  
   print(ggplot(total_interactions_validated,
                aes(x=total_n_interactions)) +
           geom_histogram(fill='#3B9AB2',alpha=1,binwidth = 1) +
@@ -96,8 +92,7 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                 legend.position = 'none') +
           xlab('Numer of interactions per gene in geneset \nFDR 1% validated genes') +
           ylab('Count'))
-  dev.off()
-  
+
   ##split number of interactions in validated geneset into 10 equal sized bins
   rm(total_interactions_validated_10bins)
   total_interactions_validated_10bins <- total_interactions_validated %>%
@@ -158,9 +153,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
     print(paste(nrow(random_interactions), ' interaction between random genes in total',sep=''))  
     
     ##histogram of number of gene interactions per gene - random set to check that everything looks fine
-    pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes_random','.pdf',sep=''),
-        width=3,
-        height = 1.5)  
     print(ggplot(total_interactions %>%
                    dplyr::filter(interaction %in% random_gene_list_controlled_interactions$genes),
                  aes(x=total_n_interactions)) +
@@ -173,8 +165,7 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                   legend.position = 'none') +
             xlab('Numer of interactions per random gene in geneset') +
             ylab('Count'))
-    dev.off()
-    
+
     ##count
     random_egdes <- data.frame(random=n_random, n_interactions=nrow(random_interactions), stringsAsFactors = F)
     
@@ -184,9 +175,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
   }#end of randomization for edges
   
   ##histo number of edges real vs random
-  pdf(file= paste(output_figure_direc,network_name,'_hist_interactions_random_vs_real','.pdf',sep=''),
-      width=3,
-      height = 1.5)  
   print(ggplot(number_edges_random,
          aes(x=n_interactions)) +
     geom_histogram(color='black',fill='#3B9AB2',alpha=1,binwidth = 1) +
@@ -198,13 +186,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
           legend.position = 'none') +
     xlab('Number of interactions in random subset of the tested gene set') +
     ylab('Count'))
-  dev.off()
-  
-  #write output
-  write.table(number_edges_random %>%
-                mutate(number_observed=nrow(interactions_validated)),
-              file= paste(output_file_direc,network_name,'_interactions_random_vs_real.txt',sep=''),
-              quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
   
   
   ############### part 2 count number of FDR2 genes interacting with at least one FDR1 gene and randomization check ############### 
@@ -232,9 +213,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
   print(paste(interactions_FDR2_with_FDR1,' FDR2 genes (out of ',nrow(total_interactions_validated_FDR2only), ') directly interacting with a FDR1 gene',sep=''))
   
   ##histogram of number of gene interactions per gene - all without FDR1% genes
-  pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes_noFDR1','.pdf',sep=''),
-      width=3,
-      height = 1.5)  
   print(ggplot(total_interactions_noFDR1,
                aes(x=total_n_interactions)) +
           geom_histogram(fill='#3B9AB2',alpha=1,binwidth = 1) +
@@ -245,12 +223,8 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                 legend.position = 'none') +
           xlab('Numer of interactions per gene in geneset') +
           ylab('Count'))
-  dev.off()
-  
+
   ##histogram of number of gene interactions per gene - validated genes
-  pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes_validated_FDR2only','.pdf',sep=''),
-      width=3,
-      height = 1.5)   
   print(ggplot(total_interactions_validated_FDR2only,
                aes(x=total_n_interactions)) +
           geom_histogram(fill='#3B9AB2',alpha=1,binwidth = 1) +
@@ -262,8 +236,7 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                 legend.position = 'none') +
           xlab('Numer of interactions per gene in geneset \nFDR 2% validated genes without FDR 1% genes') +
           ylab('Count'))
-  dev.off()
-  
+
   ##split number of interactions in validated geneset into 10 equal sized bins, based on FDR2% only genes
   rm(total_interactions_validated_10bins_FDR2only)
   total_interactions_validated_10bins_FDR2only <- total_interactions_validated_FDR2only %>%
@@ -321,9 +294,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
 
     
     ##histogram of number of gene interactions per gene  - random set to check that everything looks fine
-    pdf(file= paste(output_figure_direc,network_name,'_hist_total_interactions_genes_random_FDR2only','.pdf',sep=''),
-        width=3,
-        height = 1.5)  
     print(ggplot(total_interactions_noFDR1 %>%
                    dplyr::filter(interaction %in% random_gene_list_controlled_interactions$genes),
                  aes(x=total_n_interactions)) +
@@ -336,8 +306,7 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                   legend.position = 'none') +
             xlab('Numer of interactions per random gene in geneset') +
             ylab('Count'))
-    dev.off()
-    
+
     ##count for these genes how many have at least one interaction with a FDR1 gene
     FDR1_interaction_random <- gene_interactions %>% 
       dplyr::filter((symbol1 %in% random_gene_list_controlled_interactions$genes & symbol2 %in% validated_genes$gene)|
@@ -355,9 +324,6 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
   
   
   ##histo number of random set of genes interacting with at least one FDR1 gene 
-  pdf(file= paste(output_figure_direc,network_name,'_hist_interaction_FDR2_with_FDR1_random_vs_real','.pdf',sep=''),
-      width=3,
-      height = 1.5)   
   print(ggplot(number_interactions_with_FDR1_gene,
                aes(x=n_interactions)) +
           geom_histogram(color='black',fill='#F21A00',alpha=1,binwidth = 1) +
@@ -369,13 +335,5 @@ for(i in list.files(path =input_file_direc,pattern = 'interactions.txt')){
                 legend.position = 'none') +
           xlab(paste('Number of random genes (out of ',nrow(total_interactions_validated_FDR2only),') interacting directly \n with at least one gene validated at FDR 1%',sep='')) +
           ylab('Count'))
-  dev.off()
-  
-  
-  #write output
-  write.table(number_interactions_with_FDR1_gene %>%
-                mutate(number_observed=interactions_FDR2_with_FDR1),
-              file= paste(output_file_direc,network_name,'_interaction_FDR2_with_FDR1_random_vs_real.txt',sep=''),
-              quote=FALSE, sep='\t',row.names=FALSE,col.names = T)
 
 }#end looping through generated network files
